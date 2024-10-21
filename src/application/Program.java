@@ -10,12 +10,10 @@ import java.util.Date;
 public class Program {
     public static void main(String[] args) {
 
-        Department obj = new Department(1, "Books");
-
-        Seller seller = new Seller(21, "Bob", "bob@", 3000, new Date(), obj);
-
         SellerDao sellerdao = DaoFactory.createSellerDao();
 
+        System.out.println("Seller by Id");
+        Seller seller = sellerdao.findById(3);
         System.out.println(seller);
 
     }
