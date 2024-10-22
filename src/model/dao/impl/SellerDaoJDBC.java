@@ -24,17 +24,77 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public void insert(Seller seller) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try{
+            ps = conn.prepareStatement(
+                    "INSERT INTO seller\n" +
+                            "(Name, Email, BirthDate, BaseSalary, DepartmentId)\n" +
+                            "VALUES\n" +
+                            "(?, ?, ?, ?, ?)");
+
+            ps.setString(1, seller.getName());
+            ps.setString(2, seller.getEmail());
+            ps.setDate(3, new java.sql.Date(seller.getBirthDate().getTime()));
+            ps.setDouble(4, seller.getBaseSalary());
+            ps.setInt(5, seller.getDepartment().getId());
+            ps.executeUpdate();
+        }
+        catch(SQLException e){
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(ps);
+        }
 
     }
 
     @Override
     public void update(Seller seller) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try{
+            ps = conn.prepareStatement(
+                    "UPDATE seller " +
+                            "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? " +
+                            "WHERE Id = ? ");
 
+            ps.setString(1, seller.getName());
+            ps.setString(2, seller.getEmail());
+            ps.setDate(3, new java.sql.Date(seller.getBirthDate().getTime()));
+            ps.setDouble(4, seller.getBaseSalary());
+            ps.setInt(5, seller.getDepartment().getId());
+            ps.setInt(6, seller.getId());
+            ps.executeUpdate();
+        }
+        catch(SQLException e){
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(ps);
+            DB.closeResultSet(rs);
+        }
     }
 
     @Override
     public void deleteById(Integer id) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try{
+            ps = conn.prepareStatement(
+                    "DELETE FROM seller " +
+                            "WHERE Id = ? ");
 
+            ps.setInt(1, id);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(ps);
+            DB.closeResultSet(rs);
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import model.dao.SellerDao;
 import model.entities.Department;
 import model.entities.Seller;
 
+import java.util.Date;
 import java.util.List;
 
 public class Program {
@@ -32,6 +33,27 @@ public class Program {
         for (Seller s : allSellers) {
             System.out.println(s);
         }
+
+        System.out.println(" ");
+
+        Date data = new Date();
+        Seller s = new Seller(8, "Guilherme Guida Torres", "gguilherme1@gmail.com", 2011, data, department);
+         /*
+        System.out.println("Insert");
+        sellerdao.insert(s);
+        sellerdao.insert(s);
+
+
+        System.out.println(" ");
+
+        System.out.println("Delete by id");
+        sellerdao.deleteById(9);
+        */
+
+        System.out.println(" ");
+
+        System.out.println("Update by id");
+        sellerdao.update(s);
 
     }
 }
